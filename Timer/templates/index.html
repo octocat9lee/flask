@@ -1,0 +1,41 @@
+{% block head %}
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"
+      type="image/x-icon">
+{% endblock %}
+
+{% block page_content %}
+<audio id="over_music">
+  <source src="{{ url_for('static', filename='beepbeep.mp3') }}">
+</audio>
+
+<div>
+  <form method="POST" action="{{ url_for('custom') }}" style="display:inline">
+    <input name="time" class="time-input" placeholder="e.g. 12/30s/20m/2h">
+    <input type="submit" class="startButton" value="START">
+  </form>
+  &nbsp;&nbsp;
+  <a class="workButton" href="{{ url_for('minutes', num=25) }}">25 Minutes</a>
+  <a class="restButton" href="{{ url_for('minutes', num=5) }}">5 Minutes</a>
+
+  {% for message in get_flashed_messages() %}
+  <div class="alert-info">
+    {{ message }}
+  </div>
+  {% endfor %}
+
+</div>
+
+<div class="timer" data-seconds="{{ num }}">
+  <p id="time"></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+<!--将变量 num 的值赋值给timer.js脚本中的变量 Minutes-->
+<!--<script> var Minutes = {{ num }}; </script>-->
+{% endblock %}
